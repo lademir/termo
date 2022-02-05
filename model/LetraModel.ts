@@ -21,8 +21,21 @@ export default class LetraModel {
         return this.#revelada
     }
 
+    naoRevelada() {
+        return !this.#revelada
+    }
+
+    set revelada(newRelevada: boolean) {
+        this.#revelada = newRelevada
+    }
+
     set estado(newEstado) {
         this.#estado = newEstado
+    }
+
+    // Ao apertar
+    revelar() : LetraModel {
+        return new LetraModel(this.#letra, this.estado, this.naoRevelada())
     }
 
 

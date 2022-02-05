@@ -63,8 +63,6 @@ export default function Home() {
     const input = new String(e.target.value)
     if (input.length === 5) {
       setPalavra(palavra.mudarPalavra(input.toString().toLocaleUpperCase()))
-    } else {
-      console.log(input)
     }
   }
 
