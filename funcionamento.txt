@@ -1,0 +1,6 @@
+1. Carregar uma palavra ao abrir a pagina
+2. Esperar digitar 5 letras e ai carregar na tentativa
+    2.1. Carregar a tentativa no contexto
+3. ao apertar OK, compara a tentativa com a palavra certa
+    3.1. Compara com a palavraCerta no context
+        3.1.2. Caso erre, procurar as letras que nao estao certas

@@ -1,7 +1,7 @@
 export default class LetraModel {
 
     #letra: string
-    // certa | errada | lugar | '' 
+    // certa | errada | lugar
     #estado: string
     #revelada: boolean
 
@@ -34,8 +34,8 @@ export default class LetraModel {
     }
 
     // Ao apertar
-    revelar() : LetraModel {
-        return new LetraModel(this.#letra, this.estado, this.naoRevelada())
+    revelar() {
+        this.#revelada = true
     }
 
 

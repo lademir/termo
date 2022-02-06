@@ -1,63 +1,61 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import LetraModel from "../../model/LetraModel";
 import PalavraModel from "../../model/PalavraModel";
+import { getRandomIntInclusive } from '../../functions'
 
 
 interface PalavrasContextProps {
-    palavra?: PalavraModel
-    mudarPalavra?: (newPalavra: any) => void
-    preencheLetras?: () => void
     children?: any
+    tentativa?: PalavraModel
+    posLetras?: string[]
+    mudarTentativa?: (newPalavra: any) => void
+    preencheLetras?: (palavra: PalavraModel) => void
+    comparaPalavra?: (tentatiava: PalavraModel) => void
+    log?: () => void
 }
 
 const BASE_URL = 'http://localhost:3000/api'
 
 const PalavraContext = createContext<PalavrasContextProps>({})
 
-const defaulPalavra = new PalavraModel(-1, 'default')
+const defaulPalavra = new PalavraModel(-1, 'INICI')
+
+const palavraTeste = new PalavraModel(1, 'MOUSE');
 
 export function PalavraProvider(props) {
-    const [palavra, setPalavra] = useState<PalavraModel>(defaulPalavra)
 
 
-    function getRandomIntInclusive() {
-        // min = Math.ceil(min);
-        // max = Math.floor(max);
-        const min = 1
-        const max = 5
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
+    const palavra = palavraTeste
+    const [tentativa, setTentativa] = useState<PalavraModel>(defaulPalavra)
 
-    function mudarPalavra(e: any) {
-        const input = new String(e.target.value)
+
+    function mudarTentativa(e: any) {
+        const input = new String(e.target.value).toString().toLocaleUpperCase()
         if (input.length === 5) {
-            setPalavra(palavra.mudarPalavra(input.toString().toLocaleUpperCase()))
+            setTentativa(tentativa.mudarPalavra(input))
+            console.log('mudarTentativa',tentativa.toJson())
         }
     }
 
-    // preenche o array de letras da palavra
-    function preencheLetras() {
-        if (palavra.completa()) {
-            const arrLetras = [...palavra.palavra]
-            arrLetras.map((letra, index) => {
-                palavra.letras.push(new LetraModel(letra, ''))
-            })
-            console.log(palavra.toJson())
-        }
+    function comparaPalavra(tentativa: PalavraModel) {
+        palavra.compara(tentativa)
     }
 
-    async function carregarIdsDaPalavra() {
-        const randomId = getRandomIntInclusive()
-        const resp = await fetch(`${BASE_URL}/palavras/${randomId}`)
-        const json = await resp.json()
-        // console.log(json)
-    }
+    useEffect(() => {
+        palavra.preencherLetras()
+    }, [palavra]);
 
+ 
+    function log() {
+        console.log(palavra.toJson(), tentativa.toJson())
+    }
+    
     return (
         <PalavraContext.Provider value={{
-            palavra,
-            mudarPalavra,
-            preencheLetras
+            log,
+            tentativa,
+            mudarTentativa,
+            comparaPalavra
         }}>
 
             {props.children}
@@ -66,3 +64,11 @@ export function PalavraProvider(props) {
 }
 
 export default PalavraContext
+
+
+// async function carregarIdsDaPalavra() {
+//     const randomId = getRandomIntInclusive()
+//     const resp = await fetch(`${BASE_URL}/palavras/${randomId}`)
+//     const json = await resp.json()
+//     // console.log(json)
+// }

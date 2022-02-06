@@ -7,32 +7,35 @@ import LetraModel from '../model/LetraModel'
 import PalavraModel from '../model/PalavraModel'
 
 
-
-const defaulPalavra = new PalavraModel(-1, 'default')
-
 export default function Home() {
 
-  const { palavra, mudarPalavra, preencheLetras } = usePalavra()
-  const [letrasCertas, setLetrasCertas] = useState()
-
-  const [teste, setTeste] = useState('')
-
-  const letras: LetraModel[] = [
-    new LetraModel('M', ''),
-    new LetraModel('O', ''),
-    new LetraModel('U', ''),
-    new LetraModel('S', ''),
-    new LetraModel('E', ''),
-  ]
+  const { tentativa, mudarTentativa, comparaPalavra, log } = usePalavra()
 
   function renderLetras() {
+    // console.log('renderLetras',tentativa.letras.map(_ => _.toJson()))
     return (
-      letras.map((letra, index) => {
+      tentativa && tentativa.letras.map((letra, index) => {
         return (
-          <Letra key={index} letra={letra} />
+          <div key={index} className=" cursor-pointer
+        bg-rose-300 text-4xl font mx-3 rounded-md h-20 w-20 flex justify-center items-center
+        border-4  border-rose-400
+        ">
+            <Letra key={index} letra={letra} />
+          </div>
         )
       })
-    )
+    ) 
+  } 
+
+  useEffect(() => {
+    tentativa.preencherLetras()
+  }, [tentativa]);
+
+ 
+  function handleClick() {
+    comparaPalavra(tentativa)
+    tentativa.revelarLetras()
+    console.log(tentativa.letras.map(letra => letra.toJson()))
   }
 
   return (
@@ -42,9 +45,13 @@ export default function Home() {
           {renderLetras()}
         </div>
         <div className='flex flex-col items-center gap-y-10'>
-          <input type="text" maxLength={5} onChange={(e) => mudarPalavra(e)} />
-          <button onClick={() => preencheLetras()} className='bg-red-500 rounded-lg w-10'>
+          <input type="text" maxLength={5} onChange={(e) => mudarTentativa(e)} />
+          <button onClick={handleClick} className='bg-red-500 rounded-lg w-10'>
             OK
+          </button>
+          {tentativa.palavra}
+          <button className='bg-white rounded-lg' onClick={() => log()}>
+            log
           </button>
         </div>
       </div>
