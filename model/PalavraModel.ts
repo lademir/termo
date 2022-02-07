@@ -55,7 +55,7 @@ export default class PalavraModel {
                 this.letras[index] = new LetraModel(letra, '')
             })
         }
-    }
+    }  
 
     compara(tentativa: PalavraModel)  {
         // return this.#palavra.toLocaleUpperCase() === tentativa.palavra.toLocaleUpperCase()
@@ -87,4 +87,9 @@ export default class PalavraModel {
     }
 
 
+    static vazio() : PalavraModel {
+        const vazio = new PalavraModel(-1, '     ')
+        vazio.preencherLetras()
+        return vazio
+    }
 }

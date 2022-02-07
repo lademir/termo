@@ -7,7 +7,6 @@ import { getRandomIntInclusive } from '../../functions'
 interface PalavrasContextProps {
     children?: any
     tentativa?: PalavraModel
-    posLetras?: string[]
     mudarTentativa?: (newPalavra: any) => void
     preencheLetras?: (palavra: PalavraModel) => void
     comparaPalavra?: (tentatiava: PalavraModel) => void
@@ -18,22 +17,19 @@ const BASE_URL = 'http://localhost:3000/api'
 
 const PalavraContext = createContext<PalavrasContextProps>({})
 
-const defaulPalavra = new PalavraModel(-1, 'INICI')
-
 const palavraTeste = new PalavraModel(1, 'MOUSE');
 
 export function PalavraProvider(props) {
 
 
     const palavra = palavraTeste
-    const [tentativa, setTentativa] = useState<PalavraModel>(defaulPalavra)
+    const [tentativa, setTentativa] = useState<PalavraModel>(PalavraModel.vazio())
 
 
     function mudarTentativa(e: any) {
         const input = new String(e.target.value).toString().toLocaleUpperCase()
         if (input.length === 5) {
             setTentativa(tentativa.mudarPalavra(input))
-            console.log('mudarTentativa',tentativa.toJson())
         }
     }
 
@@ -45,6 +41,10 @@ export function PalavraProvider(props) {
         palavra.preencherLetras()
     }, [palavra]);
 
+    useEffect(() => {
+        tentativa.preencherLetras()
+      }, [tentativa]);
+
  
     function log() {
         console.log(palavra.toJson(), tentativa.toJson())
@@ -55,7 +55,7 @@ export function PalavraProvider(props) {
             log,
             tentativa,
             mudarTentativa,
-            comparaPalavra
+            comparaPalavra,
         }}>
 
             {props.children}
