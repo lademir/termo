@@ -47,7 +47,7 @@ export default function Game() {
   return (
     <Layout>
       <div className="flex flex-col justify-center items-center gap-y-10">
-        <div className="flex items-center justify-center">{renderLetras()}</div>
+        <div className="flex w-3/4 items-center justify-center">{renderLetras()}</div>
         <div className="flex flex-col items-center gap-y-10">
           <input
             className="w-16 text-center focus:border-rose-900"

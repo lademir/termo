@@ -50,7 +50,7 @@ export function PalavraProvider(props) {
     const res = await Api.getRandomWord();
     const data = res.data;
     setPalavra(PalavraModel.APartirDaPalavra(data.palavra));
-    console.log(data);
+    // console.log(data);
   }
 
   function log() {

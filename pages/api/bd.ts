@@ -808,6 +808,9 @@ const palavras: PalavraModel[] = [
   new PalavraModel(805, "calvo"),
   new PalavraModel(806, "pavio"),
   new PalavraModel(807, "ceifa"),
+  new PalavraModel(808, 'artur'),
+  new PalavraModel(809, 'elida'),
+  new PalavraModel(810, 'vitor'),
 ];
 
 export default palavras;
