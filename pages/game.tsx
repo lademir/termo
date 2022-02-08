@@ -20,7 +20,7 @@ export default function Game() {
           <div
             key={index}
             className=" cursor-pointer
-        bg-rose-300 text-4xl font mx-3 rounded-md h-20 w-20 flex justify-center items-center
+        bg-rose-300 text-4xl font mx-3 rounded-md h-20 w-12 flex justify-center items-center
         border-4  border-rose-400
         "
           >
@@ -46,8 +46,8 @@ export default function Game() {
 
   return (
     <Layout>
-      <div className="flex flex-col justify-center items-center gap-y-10">
-        <div className="flex w-3/4 items-center justify-center">{renderLetras()}</div>
+      <div className="flex h-screen w-screen flex-col justify-center items-center gap-y-10">
+        <div className="flex w-11/12 items-center justify-center">{renderLetras()}</div>
         <div className="flex flex-col items-center gap-y-10">
           <input
             className="w-16 text-center focus:border-rose-900"
