@@ -4,7 +4,7 @@ import Letra from "../components/Letra";
 import usePalavra from "../data/hooks/usePalavras";
 
 export default function Home() {
-  const { tentativa, mudarTentativa, comparaPalavra, log } = usePalavra();
+  const { tentativa, mudarTentativa, comparaPalavra, log, palavraAleatoria } = usePalavra();
   const [pressOk, setPressOk] = useState(false);
 
   function renderLetras() {
@@ -32,7 +32,7 @@ export default function Home() {
   function handleClick() {
     comparaPalavra(tentativa);
     tentativa.revelarLetras();
-    console.log(tentativa.letras.map((letra) => letra.toJson()));
+    // console.log(tentativa.letras.map((letra) => letra.toJson()));
     setPressOk(!pressOk);
   }
 
@@ -42,7 +42,7 @@ export default function Home() {
         <div className="flex items-center justify-center">{renderLetras()}</div>
         <div className="flex flex-col items-center gap-y-10">
           <input
-            className="w-12 text-center focus:border-rose-900"
+            className="w-16 text-center focus:border-rose-900"
             type="text"
             maxLength={5}
             onChange={(e) => mudarTentativa(e)}
@@ -54,8 +54,11 @@ export default function Home() {
             OK
           </button>
           {/* {tentativa.palavra} */}
-          <button className="bg-white rounded-lg hidden" onClick={() => log()}>
+          <button className="bg-white rounded-lg" onClick={() => log()}>
             log
+          </button>
+          <button className="bg-white rounded-lg" onClick={() => palavraAleatoria()}>
+            api
           </button>
         </div>
       </div>

@@ -38,6 +38,10 @@ export default class LetraModel {
         this.#revelada = true
     }
 
+    compara(_letra: LetraModel) {
+        return this.#letra === _letra.letra
+    }
+
 
     toJson() {
         return {
